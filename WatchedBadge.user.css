@@ -1,17 +1,16 @@
+/* ==UserStyle==
+@name YouTube Watched Badge
+@namespace github.com/BangDroid/YT_WatchedBadge
+@homepageURL https://github.com/BangDroid/YT_WatchedBadge
+@version 0.9.8
+@updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/WatchedBadge.user.css
+@description Replaces the red watched progress bar on thumbnails with a "Watched" cover.
+@author BangDroid
+@license DNU-V3.0
+@preprocessor stylus
+==/Userstyle==*/
 @-moz-document domain("www.youtube.com") {
-/*=======================================
 
-YouTube Watched Badge 0.9.8
-BangDroid 2020
-
-Replaces the red progress bar on watched
-videos with a tinted "Watched" cover.
-
-==========================================*/
-
-/*page loading progress bar*/
-/*------------IMPORTANT--------------*/
-/*Removed: "#progress.ytd-thumbnail-overlay-resume-playback-renderer," from line 483 (Backgrounds) of YouTube DeepDark Material*/
 #progress.ytd-thumbnail-overlay-resume-playback-renderer {  
  background-color: transparent !important; 
 }
