@@ -3,13 +3,13 @@
 @namespace github.com/BangDroid/YT_WatchedBadge
 @homepageURL https://github.com/BangDroid/YT_WatchedBadge
 @version 0.9.8
-@updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/WatchedBadge.user.css
+@updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/YT_WatchedBadge.user.css
 @description Replaces the red watched progress bar on thumbnails with a "Watched" cover.
 @author BangDroid
-@license DNU-V3.0
+@license GNU-V3.0
 @preprocessor stylus
 ==/Userstyle==*/
-@-moz-document domain("www.youtube.com") {
+@-moz-document domain("youtube.com") {
 
 #progress.ytd-thumbnail-overlay-resume-playback-renderer {  
  background-color: transparent !important; 
