@@ -2,38 +2,33 @@
 @name YouTube Watched Cover
 @namespace github.com/BangDroid/YT_WatchedBadge
 @homepageURL https://github.com/BangDroid/YT_WatchedBadge
-@version 26.1.2
+@version 26.1.3
 @updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/YT_WatchedBadge.user.css
 @description Adds a "Watched" cover to watched videos, retains progress bar with some configuration.
 @author BangDroid
 @license GNU-V3.0
 @preprocessor stylus
-@var checkbox hideBar           "Hide Progress Bar" 0
-@var checkbox hideComp          "Hide 100% Bar" 0
-@var checkbox completed         "Obscure 100% Bar" 0
+@var checkbox hideBar           "Hide All Progress Bars" 0
+@var checkbox hideComp          "Hide Bars on Watched" 0
+@var checkbox completed         "Obscure Bars on Watched" 1
 ==/Userstyle==*/
 @-moz-document domain("youtube.com") {
 
-/* Include watched progress bar */
+/* Progress bar rules - The mixin at the bottom would reside here but Stylus freaks out about it for some reason */
+
     #progress.ytd-thumbnail-overlay-resume-playback-renderer, .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
         if (hideBar) {
-        height: 0% !important;
+            height: 0% !important;
         }
         height: 3%;
     }
+
     #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         opacity: 1 !important;
         position: inherit;
         bottom: 0;
     }
-    #progress.ytd-thumbnail-overlay-resume-playback-renderer[style="width: 100%;"], .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment[style="width: 100%;"] {
-        if (completed) {
-            background: linear-gradient(to right, #981c1c91 80%, #ff27917a 100%) !important;
-        }
-        if (hideComp) {
-            height: 0% !important;
-        }
-    }
+
     .ytThumbnailOverlayProgressBarHostWatchedProgressBar { 
         if(hideComp) {
             background-color: unset !important;
@@ -41,22 +36,41 @@
     }
 
 /* Watched cover*/
+
     .resume-playback-progress-bar, ytd-thumbnail-overlay-resume-playback-renderer, .ytThumbnailBottomOverlayViewModelHost {
         width: 100% !important;
         height: 100% !important; 
         opacity: 1;
-        background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 854 480'>\<rect width='854' height='480' fill='%23000000BF'/>\<text x='50%25' y='50%25' fill='%23FFFFFFBF' font-family='Arial, sans-serif' font-size='120' text-anchor='middle' dominant-baseline='middle'>\Watched</text></svg>");
+        background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 854 480'>\<rect width='854' height='480' fill='%23000000BF'/>\<text x='50%25' y='50%25' fill='%23FFFFFFBF' font-family='Arial, sans-serif' font-size='120' text-anchor='middle' dominant-baseline='middle'>Watched</text></svg>");
         background-size: cover;
         background-color: transparent !important; 
         transition: opacity 0.15s ease-out; /*hover-out transition*/
     }
 
-
 /* Hide on hover*/
-/* Hover-in transition: workaround for the cover blocking mouse interaction on thumbnails*/
+/* Hide on hover is not complete, a known issue*/
+
     .yt-lockup:hover .resume-playback-progress-bar,.yt-shelf-grid-item:hover .resume-playback-progress-bar,.pl-video:hover .resume-playback-progress-bar,.video-list-item:hover .resume-playback-progress-bar, [lockup]:hover ytd-thumbnail-overlay-resume-playback-renderer {
         height: 0px !important;
         transition: height 0.01s ease;
         opacity: 0;
     }
+
+/* Mixin loop for progress bars with 85-100% duration see: https://github.com/BangDroid/YT_WatchedBadge/issues/2 */
+
+    progress(start, end){
+        for i in start..end {
+            #progress.ytd-thumbnail-overlay-resume-playback-renderer[style="width: {i}\%\;"], .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment[style="width: {i}\%\;"] {
+                if (hideComp) {
+                    height: 0%;
+                }
+                if (completed) {
+                    background: linear-gradient(to right, #981c1c91 80%, #ff27917a 100%) !important;
+                }
+            }
+        }
+    }
+
+    progress(85, 100);
+
 }
