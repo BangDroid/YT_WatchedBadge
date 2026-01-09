@@ -2,40 +2,20 @@
 @name YouTube Watched Cover
 @namespace github.com/BangDroid/YT_WatchedBadge
 @homepageURL https://github.com/BangDroid/YT_WatchedBadge
-@version 26.1.3
+@version 26.2
 @updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/YT_WatchedBadge.user.css
 @description Adds a "Watched" cover to watched videos, retains progress bar with some configuration.
 @author BangDroid
 @license GNU-V3.0
 @preprocessor stylus
+@var range threshold            "Watched Threshold" [80, 0, 100, 5, '%']
 @var checkbox hideBar           "Hide All Progress Bars" 0
 @var checkbox hideComp          "Hide Bars on Watched" 0
-@var checkbox completed         "Obscure Bars on Watched" 1
+@var checkbox obscure           "Obscure Bars on Watched" 1
 ==/Userstyle==*/
 @-moz-document domain("youtube.com") {
 
-/* Progress bar rules - The mixin at the bottom would reside here but Stylus freaks out about it for some reason */
-
-    #progress.ytd-thumbnail-overlay-resume-playback-renderer, .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
-        if (hideBar) {
-            height: 0% !important;
-        }
-        height: 3%;
-    }
-
-    #progress.ytd-thumbnail-overlay-resume-playback-renderer {
-        opacity: 1 !important;
-        position: inherit;
-        bottom: 0;
-    }
-
-    .ytThumbnailOverlayProgressBarHostWatchedProgressBar { 
-        if(hideComp) {
-            background-color: unset !important;
-        }
-    }
-
-/* Watched cover*/
+/* Watched thumbnail cover*/
 
     .resume-playback-progress-bar, ytd-thumbnail-overlay-resume-playback-renderer, .ytThumbnailBottomOverlayViewModelHost {
         width: 100% !important;
@@ -56,21 +36,42 @@
         opacity: 0;
     }
 
-/* Mixin loop for progress bars with 85-100% duration see: https://github.com/BangDroid/YT_WatchedBadge/issues/2 */
+/* Progress bar style rules with variables*/
 
-    progress(start, end){
+    #progress.ytd-thumbnail-overlay-resume-playback-renderer, .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
+        if (hideBar) {
+            height: 0% !important;
+        }
+        height: 3%;
+    }
+
+    #progress.ytd-thumbnail-overlay-resume-playback-renderer {
+        opacity: 1 !important;
+        position: inherit;
+        bottom: 0;
+    }
+
+    .ytThumbnailOverlayProgressBarHostWatchedProgressBar { 
+        if(hideComp) {
+            background-color: unset !important;
+        }
+    }
+
+/* Mixin loop for progress bars with configurable duration. See: https://github.com/BangDroid/YT_WatchedBadge/issues/2 */
+
+    progress(start, end) {
         for i in start..end {
             #progress.ytd-thumbnail-overlay-resume-playback-renderer[style="width: {i}\%\;"], .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment[style="width: {i}\%\;"] {
                 if (hideComp) {
                     height: 0%;
                 }
-                if (completed) {
+                if (obscure) {
                     background: linear-gradient(to right, #981c1c91 80%, #ff27917a 100%) !important;
                 }
             }
         }
     }
 
-    progress(85, 100);
+    progress(threshold, 100);
 
 }
