@@ -2,7 +2,7 @@
 @name YouTube Watched Cover
 @namespace github.com/BangDroid/YT_WatchedBadge
 @homepageURL https://github.com/BangDroid/YT_WatchedBadge
-@version 26.5
+@version 26.5.1
 @updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/YT_WatchedBadge.user.css
 @description Adds a "Watched" cover to watched videos, retains progress bar with some configuration.
 @author BangDroid
@@ -38,22 +38,23 @@
 
 /* Progress bar style rules with variables*/
 
-    #progress.ytd-thumbnail-overlay-resume-playback-renderer, #related .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
+    yt-thumbnail-bottom-overlay-view-model yt-thumbnail-overlay-progress-bar-view-model,  .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
         if (hideBar) {
             height: 0% !important;
         }
         height: 3%;
     }
 
-    #progress.ytd-thumbnail-overlay-resume-playback-renderer {
+    yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model) {
         opacity: 1 !important;
         position: inherit;
         bottom: 0;
     }
 
-    .ytThumbnailOverlayProgressBarHostWatchedProgressBar { 
+    .ytThumbnailOverlayProgressBarHostWatchedProgressBar, yt-thumbnail-overlay-progress-bar-view-model { 
         if(hideComp) {
             background-color: unset !important;
+            opacity: 0 !important;
         }
     }
 
