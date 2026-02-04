@@ -2,7 +2,7 @@
 @name YouTube Watched Cover
 @namespace github.com/BangDroid/YT_WatchedBadge
 @homepageURL https://github.com/BangDroid/YT_WatchedBadge
-@version 26.5.1
+@version 26.6
 @updateURL https://github.com/BangDroid/YT_WatchedBadge/raw/main/YT_WatchedBadge.user.css
 @description Adds a "Watched" cover to watched videos, retains progress bar with some configuration.
 @author BangDroid
@@ -17,7 +17,7 @@
 
 /* Watched thumbnail cover*/
 
-    .resume-playback-progress-bar, yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model), #related .ytThumbnailBottomOverlayViewModelHost {
+    .resume-playback-progress-bar, yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model), #related .ytThumbnailBottomOverlayViewModelHost, ytd-thumbnail-overlay-resume-playback-renderer {
         width: 100% !important;
         height: 100% !important; 
         opacity: 1;
@@ -30,7 +30,7 @@
 /* Hide on hover*/
 /* Hide on hover is not complete, a known issue*/
 
-    .yt-lockup:hover .resume-playback-progress-bar,.yt-shelf-grid-item:hover .resume-playback-progress-bar,.pl-video:hover .resume-playback-progress-bar,.video-list-item:hover .resume-playback-progress-bar, [lockup]:hover yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model) {
+    .yt-lockup:hover .resume-playback-progress-bar,.yt-shelf-grid-item:hover .resume-playback-progress-bar,.pl-video:hover .resume-playback-progress-bar,.video-list-item:hover .resume-playback-progress-bar, [lockup]:hover yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model), ytd-thumbnail-overlay-resume-playback-renderer:hover {
         height: 0px !important;
         transition: height 0.01s ease;
         opacity: 0;
@@ -38,14 +38,14 @@
 
 /* Progress bar style rules with variables*/
 
-    yt-thumbnail-bottom-overlay-view-model yt-thumbnail-overlay-progress-bar-view-model,  .ytThumbnailOverlayProgressBarHostWatchedProgressBar {
+    yt-thumbnail-bottom-overlay-view-model yt-thumbnail-overlay-progress-bar-view-model,  .ytThumbnailOverlayProgressBarHostWatchedProgressBar, #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         if (hideBar) {
             height: 0% !important;
         }
         height: 3%;
     }
 
-    yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model) {
+    yt-thumbnail-bottom-overlay-view-model:has(yt-thumbnail-overlay-progress-bar-view-model), #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         opacity: 1 !important;
         position: inherit;
         bottom: 0;
